@@ -14,7 +14,6 @@ class InputPanel: UIView {
 
     private lazy var nameInput: UILabel = {
         let label = UILabel(name: title, font: .systemFont(ofSize: 18, weight: .bold))
-        label.textColor = .systemGray
         return label
     }()
 
@@ -24,8 +23,7 @@ class InputPanel: UIView {
         self.title = title
         super.init(frame: .zero)
         setLayout()
-//        inputTextField.setLeftPaddingPoints(18)
-//        inputTextField.setRightPaddingPoints(18)
+        setInputTextField()
     }
 
     required init?(coder: NSCoder) {
@@ -42,9 +40,14 @@ class InputPanel: UIView {
             inputTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             inputTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             inputTextField.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            inputTextField.heightAnchor.constraint(equalToConstant: 56)
+            inputTextField.heightAnchor.constraint(equalToConstant: 44)
         ]}
+    }
 
-        inputTextField.layer.cornerRadius = 24
+    private func setInputTextField() {
+        inputTextField.backgroundColor = .systemGray6
+        inputTextField.font = .systemFont(ofSize: 18, weight: .medium)
+        inputTextField.layer.cornerRadius = 10
+        inputTextField.keyboardType = .numberPad
     }
 }
