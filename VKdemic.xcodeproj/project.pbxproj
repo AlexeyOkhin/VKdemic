@@ -15,6 +15,10 @@
 		0CDC11D82A040C2400221869 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11D72A040C2400221869 /* UILabel + Extension.swift */; };
 		0CDC11DA2A040CB400221869 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11D92A040CB400221869 /* UIViewController + Extension.swift */; };
 		0CDC11DC2A040D0600221869 /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11DB2A040D0600221869 /* UIView + Extension.swift */; };
+		0CDC11DF2A05545900221869 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11DE2A05545900221869 /* GameViewController.swift */; };
+		0CDC11E12A07845800221869 /* PersoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11E02A07845800221869 /* PersoneModel.swift */; };
+		0CDC11E32A078F1300221869 /* ScorePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11E22A078F1300221869 /* ScorePanel.swift */; };
+		0CDC11E52A0794B300221869 /* GameSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDC11E42A0794B300221869 /* GameSettingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		0CDC11D72A040C2400221869 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		0CDC11D92A040CB400221869 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		0CDC11DB2A040D0600221869 /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
+		0CDC11DE2A05545900221869 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		0CDC11E02A07845800221869 /* PersoneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersoneModel.swift; sourceTree = "<group>"; };
+		0CDC11E22A078F1300221869 /* ScorePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScorePanel.swift; sourceTree = "<group>"; };
+		0CDC11E42A0794B300221869 /* GameSettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				0CB346462A0402C700FDD877 /* HomeViewController.swift */,
+				0CDC11E42A0794B300221869 /* GameSettingModel.swift */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -106,6 +115,8 @@
 		0CB3465A2A04049400FDD877 /* DiseaseScreen */ = {
 			isa = PBXGroup;
 			children = (
+				0CDC11DE2A05545900221869 /* GameViewController.swift */,
+				0CDC11E02A07845800221869 /* PersoneModel.swift */,
 			);
 			path = DiseaseScreen;
 			sourceTree = "<group>";
@@ -113,6 +124,7 @@
 		0CDC11D42A040BD900221869 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0CDC11E22A078F1300221869 /* ScorePanel.swift */,
 				0CDC11D52A040BEF00221869 /* InputPanel.swift */,
 				0CDC11D72A040C2400221869 /* UILabel + Extension.swift */,
 				0CDC11D92A040CB400221869 /* UIViewController + Extension.swift */,
@@ -191,11 +203,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CDC11DF2A05545900221869 /* GameViewController.swift in Sources */,
 				0CB346472A0402C700FDD877 /* HomeViewController.swift in Sources */,
+				0CDC11E32A078F1300221869 /* ScorePanel.swift in Sources */,
+				0CDC11E12A07845800221869 /* PersoneModel.swift in Sources */,
 				0CDC11DA2A040CB400221869 /* UIViewController + Extension.swift in Sources */,
 				0CDC11DC2A040D0600221869 /* UIView + Extension.swift in Sources */,
 				0CB346432A0402C700FDD877 /* AppDelegate.swift in Sources */,
 				0CDC11D82A040C2400221869 /* UILabel + Extension.swift in Sources */,
+				0CDC11E52A0794B300221869 /* GameSettingModel.swift in Sources */,
 				0CDC11D62A040BEF00221869 /* InputPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,8 +356,9 @@
 				INFOPLIST_FILE = VKdemic/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,8 +387,9 @@
 				INFOPLIST_FILE = VKdemic/SupportingFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
