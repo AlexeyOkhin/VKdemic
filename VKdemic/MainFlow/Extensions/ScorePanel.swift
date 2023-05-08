@@ -13,11 +13,13 @@ final class ScorePanel: UIView {
 
     private lazy var healzyLabel: UILabel = {
         let label = UILabel(name: "😃 = \(numHealthy)", font: .systemFont(ofSize: 24))
+        label.textColor = .black
         return label
     }()
 
     private lazy var illLabel: UILabel = {
         let label = UILabel(name: "😰 = \(numIlls)", font: .systemFont(ofSize: 24))
+        label.textColor = .black
         return label
     }()
 

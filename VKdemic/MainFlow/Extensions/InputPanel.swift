@@ -45,7 +45,7 @@ class InputPanel: UIView {
     }
 
     private func setInputTextField() {
-        inputTextField.backgroundColor = UIColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>, alpha: <#T##CGFloat#>)
+        inputTextField.backgroundColor = .systemMint
         inputTextField.font = .systemFont(ofSize: 18, weight: .medium)
         inputTextField.layer.cornerRadius = 10
         inputTextField.textAlignment = .center

@@ -101,11 +101,10 @@ final class GameViewController: UIViewController {
     }
 
     private func addMoveAnimation() {
-        // Добавляем поведение движения
         let itemBehavior = UIDynamicItemBehavior(items: views)
-        itemBehavior.elasticity = 0.3 // Эластичность
-        itemBehavior.friction = 0.1 // Трение
-        itemBehavior.resistance = -0.2 // Сопротивление
+        itemBehavior.elasticity = 0.3
+        itemBehavior.friction = 0.1
+        itemBehavior.resistance = -0.2
         views.forEach { view in
             itemBehavior.addLinearVelocity(CGPoint(x: CGFloat.random(in: -50...50), y: CGFloat.random(in: -50...50)), for: view)
             itemBehavior.addAngularVelocity(50, for: view)
@@ -115,7 +114,6 @@ final class GameViewController: UIViewController {
 
 
     private func makeAnimator() {
-        // Создаем аниматор и добавляем поведение столкновений
         animator = UIDynamicAnimator(referenceView: self.contentView)
         let collision = UICollisionBehavior(items: views)
         collision.translatesReferenceBoundsIntoBoundary = true
@@ -125,7 +123,6 @@ final class GameViewController: UIViewController {
     }
 
     private func createCircleView() {
-        // Создаем и добавляем круглые UIView на экран
         for _ in 0..<gameSetting.numHealthy {
             let view = PersonModel(
                 frame: CGRect(
@@ -138,7 +135,7 @@ final class GameViewController: UIViewController {
             view.layer.cornerRadius = 5
             view.clipsToBounds = true
             view.infectionFactor = (0...gameSetting.infectionFactor).randomElement()!
-            // Добавляем обработчик жестов
+
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
             view.addGestureRecognizer(tapGesture)
             views.append(view)
@@ -163,23 +160,17 @@ final class GameViewController: UIViewController {
 
 extension GameViewController: UICollisionBehaviorDelegate {
 
-    func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at point: CGPoint) {
-        // Обработка столкновения с границами экрана
-    }
-
     func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item1: UIDynamicItem, with item2: UIDynamicItem, at p: CGPoint) {
-        // Обработка столкновения двух UIView
         guard let view1 = item1 as? PersonModel,
               let view2 = item2 as? PersonModel else {
             return
         }
 
-        // Если одна из UIView больна
         if (view1.isHealth && !view2.isHealth) || (!view1.isHealth && view2.isHealth) {
 
-            let illView = view1.isHealth ? view2 : view1 // определяем больную view
+            let illView = view1.isHealth ? view2 : view1
             if illView.infectionFactor > 0 {
-                let healthView = view1.isHealth ? view1 : view2 // Определяем, какая UIView здоровая
+                let healthView = view1.isHealth ? view1 : view2 
                 healthView.isHealth = false
                 illView.infectionFactor -= 1
             }

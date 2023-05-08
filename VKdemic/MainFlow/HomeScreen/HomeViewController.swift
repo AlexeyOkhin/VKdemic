@@ -53,8 +53,6 @@ class HomeViewController: UIViewController {
 
     private func setNavigation() {
         title = "VKdemic"
-        navigationController?.navigationBar.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 22, weight: .bold)]
-        
     }
 
     private func setupUI() {
