@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Constants {
+    static let sizePersonView: CGFloat = 10
+}
+
 protocol GameViewControllerProtocol {
     func startGame()
     func updateTime()
@@ -34,6 +38,9 @@ final class GameViewController: UIViewController {
         scrollView.backgroundColor = .white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = contentSize
+        scrollView.minimumZoomScale = -1.0
+        scrollView.maximumZoomScale = 4.0
+        scrollView.delegate = self
         return scrollView
     }()
 
@@ -41,6 +48,8 @@ final class GameViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .black
         view.frame.size = contentSize
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+        view.addGestureRecognizer(pinchGesture)
         return view
     }()
 
@@ -126,13 +135,13 @@ final class GameViewController: UIViewController {
         for _ in 0..<gameSetting.numHealthy {
             let view = PersonModel(
                 frame: CGRect(
-                    x: CGFloat.random(in: 1..<UIScreen.main.bounds.width - 10),
-                    y: CGFloat.random(in: 60..<UIScreen.main.bounds.height - 80),
-                    width: 10,
-                    height: 10)
+                    x: CGFloat.random(in: 10..<contentView.bounds.width - 10),
+                    y: CGFloat.random(in: 60..<contentView.bounds.height - 10),
+                    width: Constants.sizePersonView,
+                    height: Constants.sizePersonView)
             )
             view.backgroundColor = UIColor.green
-            view.layer.cornerRadius = 5
+            view.layer.cornerRadius = Constants.sizePersonView / 2
             view.clipsToBounds = true
             view.infectionFactor = (0...gameSetting.infectionFactor).randomElement()!
 
@@ -143,7 +152,8 @@ final class GameViewController: UIViewController {
         }
     }
 
-    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+    @objc
+    private func handleTap(_ gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self.contentView)
         for view in views {
             if view.frame.contains(location) {
@@ -152,6 +162,15 @@ final class GameViewController: UIViewController {
                     view.backgroundColor = .red
                 }
             }
+        }
+    }
+
+    @objc
+    private func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        guard gestureRecognizer.view != nil else { return }
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+            gestureRecognizer.view?.transform = (gestureRecognizer.view?.transform.scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale))!
+            gestureRecognizer.scale = 1.0
         }
     }
 }
@@ -208,5 +227,13 @@ extension GameViewController: GameViewControllerProtocol {
             runLoop.add((self?.updateTimer)!, forMode: .default)
                 runLoop.run()
             }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension GameViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return contentView
     }
 }
