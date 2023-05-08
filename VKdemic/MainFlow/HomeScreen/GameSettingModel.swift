@@ -8,7 +8,7 @@
 import Foundation
 
 struct GameSettingModel {
-    var numHealthy: Int
-    var infectionFactor: Int
-    var updateTime: Int
+    var numHealthy: UInt
+    var infectionFactor: UInt
+    var updateTime: UInt
 }

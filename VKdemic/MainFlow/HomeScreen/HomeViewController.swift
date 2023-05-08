@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
         let input = UITextField()
         input.becomeFirstResponder()
         let panel = InputPanel(inputField: input, title: "Размер группы")
-        input.placeholder = "от 1 до 1000"
+        input.placeholder = "от 0 до 1000"
         return panel
     }()
 
@@ -27,7 +27,7 @@ class HomeViewController: UIViewController {
     private lazy var updateTimePanel: InputPanel = {
         let input = UITextField()
         let panel = InputPanel(inputField: input, title: "Время обновления")
-        input.placeholder = "от 1 до 100"
+        input.placeholder = "от 0 до 100"
         return panel
     }()
 
@@ -77,9 +77,9 @@ class HomeViewController: UIViewController {
     @objc
     private func toStartGame() {
         guard
-            let groupSize = Int(groupSizePanel.inputTextField.text ?? "1"),
-            let infectionFactor = Int(infectionFactorPanel.inputTextField.text ?? "1"),
-            let updateTime = Int(updateTimePanel.inputTextField.text ?? "1")
+            let groupSize = UInt(groupSizePanel.inputTextField.text ?? "1"),
+            let infectionFactor = UInt(infectionFactorPanel.inputTextField.text ?? "1"),
+            let updateTime = UInt(updateTimePanel.inputTextField.text ?? "1")
         else {
             return
         }
@@ -89,7 +89,12 @@ class HomeViewController: UIViewController {
             infectionFactor: infectionFactor,
             updateTime: updateTime
         )
-        let gameVC = GameViewController(gameSetting: setting)
-        navigationController?.pushViewController(gameVC, animated: false)
+        if groupSize <= 1000 && infectionFactor <= 1000 && updateTime <= 100 {
+            let gameVC = GameViewController(gameSetting: setting)
+            navigationController?.pushViewController(gameVC, animated: false)
+        } else {
+            showAlert(with: "Внимание!!!", and: "Проверьте правильность параметров ввода")
+        }
+
     }
 }

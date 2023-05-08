@@ -8,7 +8,7 @@
 import UIKit
 
 private enum Constants {
-    static let sizePersonView: CGFloat = 10
+    static let sizePersonView: CGFloat = 24
 }
 
 protocol GameViewControllerProtocol {
@@ -26,11 +26,11 @@ final class GameViewController: UIViewController {
     private let calculateQueue = DispatchQueue.global(qos: .userInitiated)
 
     private var views: [PersonModel] = []
-    private var animator: UIDynamicAnimator!
-    private var updateTimer: Timer!
+    private var animator: UIDynamicAnimator = UIDynamicAnimator()
+    private var updateTimer: Timer = Timer()
 
     private lazy var scorePanel: ScorePanel = {
-        ScorePanel(numHealthy: gameSetting.numHealthy)
+        ScorePanel(numHealthy: Int(gameSetting.numHealthy))
     }()
 
     private lazy var scrollView: UIScrollView = {
@@ -111,9 +111,9 @@ final class GameViewController: UIViewController {
 
     private func addMoveAnimation() {
         let itemBehavior = UIDynamicItemBehavior(items: views)
-        itemBehavior.elasticity = 0.3
+        itemBehavior.elasticity = 0.6
         itemBehavior.friction = 0.1
-        itemBehavior.resistance = -0.2
+        itemBehavior.resistance = -0.7
         views.forEach { view in
             itemBehavior.addLinearVelocity(CGPoint(x: CGFloat.random(in: -50...50), y: CGFloat.random(in: -50...50)), for: view)
             itemBehavior.addAngularVelocity(50, for: view)
@@ -135,15 +135,15 @@ final class GameViewController: UIViewController {
         for _ in 0..<gameSetting.numHealthy {
             let view = PersonModel(
                 frame: CGRect(
-                    x: CGFloat.random(in: 10..<contentView.bounds.width - 10),
-                    y: CGFloat.random(in: 60..<contentView.bounds.height - 10),
+                    x: CGFloat.random(in: Constants.sizePersonView..<contentView.bounds.width - Constants.sizePersonView),
+                    y: CGFloat.random(in: 60..<contentView.bounds.height - Constants.sizePersonView),
                     width: Constants.sizePersonView,
                     height: Constants.sizePersonView)
             )
             view.backgroundColor = UIColor.green
             view.layer.cornerRadius = Constants.sizePersonView / 2
             view.clipsToBounds = true
-            view.infectionFactor = (0...gameSetting.infectionFactor).randomElement()!
+            view.infectionFactor = Int(gameSetting.infectionFactor)
 
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
             view.addGestureRecognizer(tapGesture)
@@ -169,7 +169,9 @@ final class GameViewController: UIViewController {
     private func handlePinchGesture(_ gestureRecognizer: UIPinchGestureRecognizer) {
         guard gestureRecognizer.view != nil else { return }
         if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-            gestureRecognizer.view?.transform = (gestureRecognizer.view?.transform.scaledBy(x: gestureRecognizer.scale, y: gestureRecognizer.scale))!
+            gestureRecognizer.view?.transform = (gestureRecognizer.view?.transform.scaledBy(
+                                                                                            x: gestureRecognizer.scale,
+                                                                                            y: gestureRecognizer.scale))!
             gestureRecognizer.scale = 1.0
         }
     }
@@ -208,6 +210,7 @@ extension GameViewController: GameViewControllerProtocol {
 
     func updateTime() {
         calculateQueue.async { [weak self] in
+
             self?.updateTimer = Timer(timeInterval: Double(self?.gameSetting.updateTime ?? 1), repeats: true) { [weak self] _ in
                     var ills = 0
                     self?.views.forEach { person in
@@ -218,13 +221,18 @@ extension GameViewController: GameViewControllerProtocol {
                             }
                         }
                     }
-                    print(ills)
                     DispatchQueue.main.async {
                         self?.scorePanel.updateScore(with: ills)
+                        if ills == self?.gameSetting.numHealthy ?? 2000 {
+                            self?.showAlert(with: "Внимание!!!", and: "Вся группа заражена!!!", completion: {
+                                self?.navigationController?.popViewController(animated: true)
+                            })
+                        }
                     }
                 }
             let runLoop = RunLoop.current
-            runLoop.add((self?.updateTimer)!, forMode: .default)
+            guard let updateTimer = self?.updateTimer else { return }
+            runLoop.add(updateTimer, forMode: .default)
                 runLoop.run()
             }
     }

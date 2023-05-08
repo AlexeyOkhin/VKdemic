@@ -34,7 +34,7 @@ class InputPanel: UIView {
         self.addSubviews(nameInput, inputTextField) {[
 
             nameInput.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            nameInput.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            nameInput.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
             inputTextField.topAnchor.constraint(equalTo: nameInput.bottomAnchor, constant: 8),
             inputTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
